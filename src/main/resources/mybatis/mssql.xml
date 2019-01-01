@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mybatis1.mapper.CityMapper">
+    <select id="getMssqlDual" resultType="string">
+		SELECT 'DB1' FROM DUAL;
+	</select>
+
+    <update id="createTbl">
+	create table if not exists member (
+		id number,
+		name varchar2(100)
+	)
+	</update>
+
+    <!--<select id="findByState" parameterType="String" resultType="com.example.mybatis1.domain.City">-->
+        <!--select * from city where state = #{state}-->
+    <!--</select>-->
+</mapper>
