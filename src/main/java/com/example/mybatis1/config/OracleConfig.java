@@ -15,28 +15,29 @@ import org.springframework.context.annotation.Primary;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(value="com.example.mybatis1.mapper.mssql", sqlSessionFactoryRef="mssqlSqlSessionFactory")
-public class MssqlConfig {
-    @Bean(name="mssqlDataSource")
-    @Primary
-    @ConfigurationProperties(prefix = "datasources.mssql")
-    public DataSource mssqlDataSource(){
+@MapperScan(value="com.example.mybatis1.mapper.oracle", sqlSessionFactoryRef="oracleSqlSessionFactory")
+public class OracleConfig {
+
+    @Bean(name = "oracleDataSource")
+    //@Primary
+    @ConfigurationProperties(prefix = "datasources.oracle")
+    public DataSource oracleDataSource(){
         return DataSourceBuilder.create().build();
     }
 
-    @Bean(name = "mssqlSqlSessionFactory")
-    @Primary
-    public SqlSessionFactory mssqlSqlSessionFactory(@Qualifier("mssqlDataSource") DataSource mssqlDataSource,
-            ApplicationContext applicationContext) throws Exception {
+    @Bean(name = "oracleSqlSessionFactory")
+    //@Primary
+    public SqlSessionFactory oracleSqlSessionFactory(@Qualifier("oracleDataSource") DataSource oracleDataSource
+        , ApplicationContext applicationContext) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(mssqlDataSource);
+        sqlSessionFactoryBean.setDataSource(oracleDataSource);
         sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:mybatis/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 
-    @Bean(name = "mssqlSqlSessionTemplate")
-    @Primary
-    public SqlSessionTemplate mssqlSqlSessionTemplate(SqlSessionFactory mssqlSqlSessionFactory) throws Exception {
-        return new SqlSessionTemplate(mssqlSqlSessionFactory);
+    @Bean(name="oracleSqlSessionTemplate")
+    //@Primary
+    public SqlSessionTemplate oracleSqlSessionTemplate(SqlSessionFactory oracleSqlSessionFactory) throws Exception {
+        return new SqlSessionTemplate(oracleSqlSessionFactory);
     }
 }
